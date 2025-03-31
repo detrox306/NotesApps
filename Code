@@ -1,0 +1,17 @@
+package com.example.noteswithimages
+
+import android.Manifest import android.content.Context import android.content.Intent import android.content.pm.PackageManager import android.graphics.Bitmap import android.net.Uri import android.os.Bundle import android.provider.MediaStore import android.widget.Toast import androidx.activity.compose.rememberLauncherForActivityResult import androidx.activity.compose.setContent import androidx.activity.result.contract.ActivityResultContracts import androidx.appcompat.app.AppCompatActivity import androidx.compose.foundation.Image import androidx.compose.foundation.clickable import androidx.compose.foundation.layout.* import androidx.compose.foundation.lazy.LazyColumn import androidx.compose.foundation.lazy.items import androidx.compose.foundation.shape.RoundedCornerShape import androidx.compose.material.* import androidx.compose.runtime.* import androidx.compose.ui.Alignment import androidx.compose.ui.Modifier import androidx.compose.ui.graphics.asImageBitmap import androidx.compose.ui.platform.LocalContext import androidx.compose.ui.unit.dp import androidx.core.content.ContextCompat import androidx.lifecycle.ViewModel import androidx.lifecycle.ViewModelProvider import androidx.lifecycle.viewmodel.compose.viewModel import java.io.File import java.io.FileOutputStream import java.io.IOException import java.util.*
+
+// Note Data Class data class Note(val text: String, val imageUri: String?)
+
+// ViewModel for Notes class NotesViewModel : ViewModel() { private val _notes = mutableStateListOf<Note>() val notes: List<Note> get() = _notes
+
+fun addNote(text: String, imageUri: String?) {
+    _notes.add(Note(text, imageUri))
+}
+
+}
+
+class MainActivity : AppCompatActivity() { override fun onCreate(savedInstanceState: Bundle?) { super.onCreate(savedInstanceState) setContent { NotesApp() } } }
+
+@Composable fun NotesApp(notesViewModel: NotesViewModel = viewModel()) { val context = LocalContext.current val permissionGranted = remember { mutableStateOf
